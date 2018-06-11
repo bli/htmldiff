@@ -211,8 +211,8 @@ module HTMLDiff
         @content << wrap_text(non_tags.join(@join_char), tagname, cssclass) unless non_tags.empty?
 
         break if words.empty?
-        break if @ignore_tags && tagname == "del"
-        @content += extract_consecutive_words(words) { |word| tag?(word) }
+        tags = extract_consecutive_words(words) { |word| tag?(word) }
+        @content += tags unless @ignore_tags && tagname == "del" && cssclass == 'diffmod'
       end
     end
 
